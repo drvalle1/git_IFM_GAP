@@ -158,7 +158,7 @@ sample.delta1=function(param,nsites){
   nfactors=length(param$delta)
   a1=param$a1+((nsites*nfactors)/2)
   aux=param$phi*(param$lambda^2)
-  soma=apply(aux,2,sum)
+  soma=colSums(aux)
   
   tmp=rep(NA,nfactors)
   tmp[1]=1
@@ -172,7 +172,7 @@ sample.delta1=function(param,nsites){
 sample.deltah=function(param,nsites){
   nfactors=length(param$delta)
   aux=param$phi*(param$lambda^2)
-  soma=apply(aux,2,sum)
+  soma=colSums(aux)
   delta=param$delta
   
   for (i in 2:nfactors){
@@ -228,7 +228,7 @@ sample.factor=function(i,param,neighb,nsites,ntime,v){
   u=runif(1)
   nfactors=length(param$delta)
   if (u<thresh & nfactors!=2){ #I don't want to end up with a single factor
-    tmp=apply(abs(param$lambda)<neighb,2,sum)
+    tmp=colSums(abs(param$lambda)<neighb)
     cond=tmp==nrow(param$lambda)
     if (sum(cond)>0) {
       param$lambda=param$lambda[,!cond]

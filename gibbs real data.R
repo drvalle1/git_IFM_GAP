@@ -23,8 +23,8 @@ tmp[cond,nomes]=NA
 
 #put NA's for sites likely to have been impacted by Tucurui
 #not impacted are: 2885, 2370, 2371, 2360
-#impacted: 2920, 2970, 2975, (perhaps 2910, 2905)
-impacted=c(2920, 2970, 2975)
+#impacted: 2920, 2970, 2975, 2905, 2910 
+impacted=c(2920, 2970, 2975, 2905, 2910)
 
 #remove lags of impacted sites
 ind=which(colnames(tmp)%in%paste('w',impacted,'_lag',sep=''))
@@ -45,8 +45,10 @@ res=ifm.gap(y=y,ind.impact.sites=impacted.sites,ngibbs=ngibbs,nadapt=1000)
 setwd('U:/independent studies/kaplan amazon hydrology/gibbs/results')
 write.csv(res$as,'vec as.csv',row.names=F)
 write.csv(res$sig2,'vec sig2.csv',row.names=F)
-write.csv(res$factors,'vec factors.csv',row.names=F)
+write.csv(res$nfactors,'vec nfactors.csv',row.names=F)
 write.csv(res$betas,'vec betas.csv',row.names=F)
+
+plot(res$nfactors,type='l')
 
 ind=seq(from=ngibbs*(9/10),to=ngibbs,length.out=1000)
 write.csv(res$prec[ind,],'vec precision.csv',row.names=F)
